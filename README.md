@@ -7,6 +7,7 @@
 ## Demo & Snippets
 
 ![Mock Board](mocks/Game-Board.png)
+![Player Screen](mocks/Player-Screen.png)
 
 - ***
 
