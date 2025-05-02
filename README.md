@@ -6,7 +6,12 @@
 
 ## Demo & Snippets
 
+### Mock-Up of Board
+
 ![Mock Board](mocks/Game-Board.png)
+
+### Mock-Up for Screen
+
 ![Player Screen](mocks/Player-Screen.png)
 
 - ***
