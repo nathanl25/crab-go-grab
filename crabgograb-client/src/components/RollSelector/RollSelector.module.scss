@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  //   align-items: center;
+  justify-content: space-between;
+  width: 70%;
+  margin: 0 auto;
+}
+.selection_group {
+  display: flex;
+  flex-direction: row;
+  gap: 3em;
+  //   align-items: center;
+  //   justify-content: space-between;
+  //   width: 100%;
+}

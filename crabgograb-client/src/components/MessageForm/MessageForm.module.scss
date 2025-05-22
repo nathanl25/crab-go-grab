@@ -1,0 +1,51 @@
+.container {
+  font-family: Montserrat;
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin-top: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 2em;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+}
+.input_row {
+  font-size: 2em;
+  display: flex;
+  gap: 2em;
+}
+.error_row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 1.5em;
+  min-height: 3em;
+  color: red;
+  p {
+    font-style: italic;
+    margin: 0;
+    text-align: center;
+  }
+}
+.submit {
+  padding-top: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}
+.error_message {
+  color: red;
+}
+.label {
+  flex: 0 1 400px;
+  font-weight: bold;
+}
+
+.input {
+  flex: 1 1 auto;
+}

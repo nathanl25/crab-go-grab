@@ -1,0 +1,63 @@
+@use '../../scss/partials/mixins';
+.add {
+  @include mixins.button(rgb(80, 75, 223), rgb(255, 255, 255));
+  &:hover {
+    border: 3px solid rgb(255, 255, 255);
+  }
+}
+
+.delete {
+  @include mixins.button(rgb(209, 4, 4), rgb(239, 229, 229));
+  &:hover {
+    border: 3px solid rgb(211, 199, 199);
+  }
+}
+.default {
+  @include mixins.button(rgb(72, 72, 69), rgb(185, 185, 175));
+}
+.close {
+  @include mixins.button(rgb(54, 40, 212), rgb(36, 123, 236));
+}
+.hidden {
+  display: none;
+}
+.medium {
+  font-size: 1.2rem;
+  font-weight: bold;
+  min-width: 42px;
+  padding: 0.38rem;
+}
+.large {
+  font-size: 1rem;
+  min-width: 54px;
+  padding: 1rem 3.5rem 1rem 3.5rem;
+  border-radius: 12px;
+}
+.extra_large {
+  font-size: 2rem;
+
+  min-width: 65px;
+  padding: 0.63rem;
+  border-radius: 10px;
+}
+
+.employee {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: rgb(80, 75, 223);
+  background-color: rgba(238, 242, 254, 0.473);
+  border-radius: 0;
+  border: none;
+  min-width: 0;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 0;
+  padding-bottom: 0;
+  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+  }
+  &:first-child {
+    border-right: 1px solid black;
+  }
+}

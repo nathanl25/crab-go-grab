@@ -1,0 +1,75 @@
+.container {
+  font-family: Montserrat;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin-top: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 2em;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+}
+.input_row {
+  font-size: 2em;
+  display: flex;
+  gap: 2em;
+}
+.error_row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 1.5em;
+  min-height: 3em;
+  color: red;
+  p {
+    font-style: italic;
+    margin: 0;
+    text-align: center;
+  }
+}
+.submit {
+  padding-top: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}
+.error_message {
+  color: red;
+}
+.label {
+  flex: 0 1 400px;
+  font-weight: bold;
+}
+
+.input {
+  flex: 1 1 auto;
+}
+
+.radio_group {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.radio_option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  input[type="radio"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor: pointer;
+  }
+
+  label {
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+}
