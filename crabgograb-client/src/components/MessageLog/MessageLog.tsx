@@ -1,30 +1,32 @@
-import React from 'react';
-// import { useWebSocketContext } from '../../context/WebSocketContext';
-
-// Todo - use WebSocketContext instead of prop drilling
+import React, { useRef, useEffect } from 'react';
+import classes from './MessageLog.module.scss';
 
 interface MessageLogProps {
   messages: string[];
 }
 
 const MessageLog: React.FC<MessageLogProps> = ({ messages }) => {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
-    <>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Greetings</th>
-          </tr>
-        </thead>
-        <tbody>
-          {messages.map((message, index) => (
-            <tr key={index}>
-              <td>{message}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+    <div className={classes.chatContainer}>
+      <div className={classes.messageList}>
+        {messages.map((message, index) => (
+          <div key={index} className={classes.messageItem}>
+            {message}
+          </div>
+        ))}
+        <div ref={messagesEndRef} />
+      </div>
+    </div>
   );
 };
 

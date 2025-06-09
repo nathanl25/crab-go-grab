@@ -1,63 +1,99 @@
 @use '../../scss/partials/mixins';
+
 .add {
-  @include mixins.button(rgb(80, 75, 223), rgb(255, 255, 255));
+  @include mixins.button(#007bff, #ffffff);
   &:hover {
-    border: 3px solid rgb(255, 255, 255);
+    background-color: #0056b3;
+    border: 2px solid #0056b3;
   }
 }
 
 .delete {
-  @include mixins.button(rgb(209, 4, 4), rgb(239, 229, 229));
+  @include mixins.button(#dc3545, #ffffff);
   &:hover {
-    border: 3px solid rgb(211, 199, 199);
+    background-color: #c82333;
+    border: 2px solid #c82333;
   }
 }
+
+.edit {
+  @include mixins.button(#28a745, #ffffff);
+  &:hover {
+    background-color: #218838;
+    border: 2px solid #218838;
+  }
+}
+
 .default {
-  @include mixins.button(rgb(72, 72, 69), rgb(185, 185, 175));
+  @include mixins.button(#6c757d, #ffffff);
+  &:hover {
+    background-color: #5a6268;
+    border: 2px solid #5a6268;
+  }
 }
+
 .close {
-  @include mixins.button(rgb(54, 40, 212), rgb(36, 123, 236));
+  @include mixins.button(#007bff, #ffffff);
+  &:hover {
+    background-color: #0056b3;
+    border: 2px solid #0056b3;
+  }
 }
+
 .hidden {
   display: none;
 }
+
 .medium {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
   min-width: 42px;
-  padding: 0.38rem;
+  padding: 8px 16px;
+  border-radius: 8px;
 }
-.large {
-  font-size: 1rem;
-  min-width: 54px;
-  padding: 1rem 3.5rem 1rem 3.5rem;
-  border-radius: 12px;
-}
-.extra_large {
-  font-size: 2rem;
 
+.large {
+  font-size: 1.2rem;
+  min-width: 54px;
+  padding: 12px 24px;
+  border-radius: 8px;
+}
+
+.extra_large {
+  font-size: 1.5rem;
   min-width: 65px;
-  padding: 0.63rem;
-  border-radius: 10px;
+  padding: 16px 32px;
+  border-radius: 8px;
 }
 
 .employee {
   font-weight: bold;
-  font-size: 1.5rem;
-  color: rgb(80, 75, 223);
-  background-color: rgba(238, 242, 254, 0.473);
-  border-radius: 0;
+  font-size: 1.2rem;
+  color: #007bff;
+  background-color: transparent;
+  border-radius: 8px;
   border: none;
   min-width: 0;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-top: 0;
-  padding-bottom: 0;
-  text-decoration: underline;
+  padding: 8px 16px;
+  transition: all 0.2s ease;
+
   &:hover {
     cursor: pointer;
+    background-color: #f0f0f0;
   }
+
   &:first-child {
-    border-right: 1px solid black;
+    border-right: 1px solid #333;
+  }
+}
+
+.disabled {
+  @include mixins.button(#6c757d, #ffffff);
+  cursor: not-allowed;
+  opacity: 0.6;
+
+  &:hover {
+    background-color: #6c757d;
+    border: 2px solid #6c757d;
   }
 }

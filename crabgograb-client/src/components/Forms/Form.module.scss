@@ -6,48 +6,57 @@
   margin-top: 1em;
   margin-left: auto;
   margin-right: auto;
-  gap: 2em;
+  gap: 1rem;
 }
+
 .field {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
+
 .input_row {
-  font-size: 2em;
   display: flex;
-  gap: 2em;
+  gap: 1rem;
+  align-items: center;
 }
+
 .error_row {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  font-size: 1.5em;
-  min-height: 3em;
-  color: red;
+  min-height: 1.5rem;
+  color: #dc3545;
+
   p {
     font-style: italic;
     margin: 0;
     text-align: center;
   }
 }
+
 .submit {
-  padding-top: 2em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 1em;
+  gap: 0.5rem;
 }
-.error_message {
-  color: red;
-}
+
 .label {
-  flex: 0 1 400px;
   font-weight: bold;
+  color: #333;
 }
 
 .input {
-  flex: 1 1 auto;
+  flex: 1;
+  padding: 8px 12px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
 }
 
 .radio_group {
@@ -62,7 +71,7 @@
   align-items: center;
   gap: 0.5rem;
 
-  input[type="radio"] {
+  input[type='radio'] {
     width: 1.2rem;
     height: 1.2rem;
     cursor: pointer;

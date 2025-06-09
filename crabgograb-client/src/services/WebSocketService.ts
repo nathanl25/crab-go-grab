@@ -4,7 +4,8 @@ import { Client } from '@stomp/stompjs';
 export const createWebSocketService = (
   onMessageReceived: (message: string) => void,
   onConnectionChange: (connected: boolean) => void,
-  onRollOutcome: (outcome: string) => void
+  onRollOutcome: (outcome: string) => void,
+  onRollStatus: (isRolling: boolean) => void
 ) => {
   // Create a STOMP client
 
@@ -15,22 +16,22 @@ export const createWebSocketService = (
     onConnect: (frame) => {
       onConnectionChange(true);
       console.log('Connected: ' + frame);
+
+      // General lobby messages
       client.subscribe('/game/lobby', (greeting) => {
-        const message = JSON.parse(greeting.body).content;
-        console.log('Received message: ' + message);
-        onMessageReceived(message);
+        const message = JSON.parse(greeting.body);
+        onMessageReceived(message.content);
       });
-      // This only publishes when the client is connected
-      if (initialName) {
-        client.publish({
-          destination: '/app/greet',
-          body: JSON.stringify({ name: initialName }),
-        });
-      }
-      client.subscribe('/game/outcome', (outcome) => {
-        const message = JSON.parse(outcome.body).content;
-        // console.log('Received outcome: ' + message);
-        onRollOutcome(message);
+
+      // Roll-specific subscriptions
+      client.subscribe('/game/roll/status', (message) => {
+        const status = JSON.parse(message.body);
+        onRollStatus(status.content === 'ROLL_IN_PROGRESS');
+      });
+
+      client.subscribe('/game/roll/outcome', (outcome) => {
+        const message = JSON.parse(outcome.body);
+        onRollOutcome(message.content);
       });
     },
     onWebSocketError: (error) => {

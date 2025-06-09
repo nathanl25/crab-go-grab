@@ -43,9 +43,9 @@ public class LobbyController {
     }
 
     @MessageMapping("/roll")
-    @SendTo("/game/outcome")
-    public Message rollDice(Player user) {
-        return lobbyService.announceRolldown(user.getName());
+    // @SendTo("/game/outcome")
+    public void rollDice(Player user) {
+        lobbyService.announceRolldown(user.getName());
         // String announcement = user.getName() + " is rolling";
         // return new Message(announcement, MessageType.ANNOUNCEMENT);
     }

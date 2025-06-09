@@ -9,6 +9,8 @@ import { pl } from 'zod/v4/locales';
 interface UseWebSocketReturn {
   connected: boolean;
   messages: string[];
+  isRolling: boolean;
+  playerSelection: number;
   connect: (name: string) => void;
   disconnect: () => void;
   sendMessage: (name: string) => void;
@@ -23,6 +25,7 @@ export const useWebSocket = (): UseWebSocketReturn => {
   const [service, setService] = useState<WebSocketService | null>(null);
   const [playerSelection, setPlayerSelection] = useState<number>(0);
   const [rollOutcome, setRollOutcome] = useState<string>('');
+  const [isRolling, setIsRolling] = useState(false);
 
   // Initialize service only once
   useEffect(() => {
@@ -35,6 +38,7 @@ export const useWebSocket = (): UseWebSocketReturn => {
       setConnected(isConnected);
       if (!isConnected) {
         setMessages([]);
+        setIsRolling(false);
       }
     };
 
@@ -46,10 +50,15 @@ export const useWebSocket = (): UseWebSocketReturn => {
       // setMessages((prevMessages) => [...prevMessages, outcome]);
     };
 
+    const handleRollStatus = (rolling: boolean) => {
+      setIsRolling(rolling);
+    };
+
     const wsService = createWebSocketService(
       handleMessageReceived,
       handleConnectionChange,
-      handleRollOutcome
+      handleRollOutcome,
+      handleRollStatus
     );
     setService(wsService);
 
@@ -116,6 +125,8 @@ export const useWebSocket = (): UseWebSocketReturn => {
   return {
     connected,
     messages,
+    isRolling,
+    playerSelection,
     connect,
     disconnect,
     sendMessage,

@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
 import { useWebSocket } from './hooks/useWebSocket';
 import MessageForm from './components/Forms/MessageForm';
-
 import MessageLog from './components/MessageLog/MessageLog';
 import JoinForm from './components/Forms/JoinForm';
-import RollForm from './components/Forms/RollForm';
 import RollSelector from './components/RollSelector/RollSelector';
 
 const App: React.FC = () => {
+  // const [selection, setSelection] = useState<number>(0);
   const {
     connected,
+    isRolling,
     connect,
     disconnect,
     sendMessage,
     rollDice,
     messages,
     setPlayerSelection,
+    playerSelection,
     notifySelection,
   } = useWebSocket();
 
   const updateSelection = (selection: number) => {
+    // setPlayerSelection(selection);
     setPlayerSelection(selection);
     notifySelection(selection);
   };
@@ -38,11 +40,12 @@ const App: React.FC = () => {
       </div>
       <div className="row">
         <div className="col-md-6">
-          {/* {connected && <RollForm onRoll={rollDice} />} */}
           {connected && (
             <RollSelector
+              isRolling={isRolling}
               rollNumber={rollDice}
               changeSelection={updateSelection}
+              currentSelection={playerSelection}
             />
           )}
         </div>
