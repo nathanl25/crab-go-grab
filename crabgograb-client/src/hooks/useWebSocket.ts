@@ -11,21 +11,28 @@ interface UseWebSocketReturn {
   messages: string[];
   isRolling: boolean;
   playerSelection: number;
+  players: string[];
   connect: (name: string) => void;
   disconnect: () => void;
   sendMessage: (name: string) => void;
   rollDice: () => void;
   setPlayerSelection: (selection: number) => void;
   notifySelection: (selection: number) => void;
+  modalOpen: boolean;
+  modalMessage: string;
+  closeModal: () => void;
 }
 
 export const useWebSocket = (): UseWebSocketReturn => {
   const [connected, setConnected] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
+  const [players, setPlayers] = useState<string[]>([]);
   const [service, setService] = useState<WebSocketService | null>(null);
   const [playerSelection, setPlayerSelection] = useState<number>(0);
   const [rollOutcome, setRollOutcome] = useState<string>('');
   const [isRolling, setIsRolling] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   // Initialize service only once
   useEffect(() => {
@@ -38,7 +45,9 @@ export const useWebSocket = (): UseWebSocketReturn => {
       setConnected(isConnected);
       if (!isConnected) {
         setMessages([]);
+        setPlayerSelection(0);
         setIsRolling(false);
+        setPlayers([]);
       }
     };
 
@@ -54,11 +63,17 @@ export const useWebSocket = (): UseWebSocketReturn => {
       setIsRolling(rolling);
     };
 
+    const handlePlayersUpdated = (players: string[]) => {
+      setPlayers(players);
+      console.log('Updated players:', players);
+    };
+
     const wsService = createWebSocketService(
       handleMessageReceived,
       handleConnectionChange,
       handleRollOutcome,
-      handleRollStatus
+      handleRollStatus,
+      handlePlayersUpdated
     );
     setService(wsService);
 
@@ -74,20 +89,18 @@ export const useWebSocket = (): UseWebSocketReturn => {
     if (!rollOutcome) return;
     console.log(playerSelection);
     console.log(rollOutcome);
+
+    let message = '';
     if (playerSelection.toString() === rollOutcome) {
-      // console.log('You guessed correctly!');
-      alert('You guessed correctly!');
+      message = 'You guessed correctly!';
     } else if (playerSelection === 0) {
-      alert('You did not select a number');
-      // console.log('You guessed incorrectly.');
+      message = 'You did not select a number';
     } else {
-      alert(
-        'You selected ' +
-          playerSelection +
-          ' but the outcome was ' +
-          rollOutcome
-      );
+      message = `You selected ${playerSelection} but the outcome was ${rollOutcome}`;
     }
+
+    setModalMessage(message);
+    setModalOpen(true);
     setPlayerSelection(0);
   }, [rollOutcome]);
 
@@ -99,6 +112,7 @@ export const useWebSocket = (): UseWebSocketReturn => {
 
   const disconnect = () => {
     if (service) {
+      service.announceDisconnect();
       service.disconnect();
       console.log('Disconnected');
     }
@@ -127,11 +141,15 @@ export const useWebSocket = (): UseWebSocketReturn => {
     messages,
     isRolling,
     playerSelection,
+    players,
     connect,
     disconnect,
     sendMessage,
     rollDice,
     setPlayerSelection,
     notifySelection,
+    modalOpen,
+    modalMessage,
+    closeModal: () => setModalOpen(false),
   };
 };

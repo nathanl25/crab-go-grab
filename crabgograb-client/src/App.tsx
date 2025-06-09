@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useWebSocket } from './hooks/useWebSocket';
-import MessageForm from './components/Forms/MessageForm';
-import MessageLog from './components/MessageLog/MessageLog';
-import JoinForm from './components/Forms/JoinForm';
-import RollSelector from './components/RollSelector/RollSelector';
+import GameSection from './components/GameSection/GameSection';
+import JoinSection from './components/JoinSection/JoinSection';
+import { Modal } from './components/Modal/Modal';
 
 const App: React.FC = () => {
-  // const [selection, setSelection] = useState<number>(0);
   const {
     connected,
     isRolling,
+    players,
+    modalOpen,
+    modalMessage,
+    closeModal,
     connect,
     disconnect,
     sendMessage,
@@ -20,40 +22,30 @@ const App: React.FC = () => {
     notifySelection,
   } = useWebSocket();
 
-  const updateSelection = (selection: number) => {
-    // setPlayerSelection(selection);
-    setPlayerSelection(selection);
-    notifySelection(selection);
-  };
-
   return (
-    <div className="container" id="main-content">
-      <JoinForm
-        connected={connected}
-        onConnect={connect}
-        onDisconnect={disconnect}
+    <main>
+      {!connected ? (
+        <JoinSection onConnect={connect} />
+      ) : (
+        <GameSection
+          onDisconnect={disconnect}
+          isRolling={isRolling}
+          rollDice={rollDice}
+          messages={messages}
+          playerSelection={playerSelection}
+          setPlayerSelection={setPlayerSelection}
+          notifySelection={notifySelection}
+          sendMessage={sendMessage}
+          players={players}
+        />
+      )}
+      <Modal
+        isOpen={modalOpen}
+        onClose={closeModal}
+        message={modalMessage}
+        type={modalMessage.includes('correctly') ? 'success' : 'error'}
       />
-      <div className="row">
-        <div className="col-md-12">
-          {connected && <MessageLog messages={messages} />}
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6">
-          {connected && (
-            <RollSelector
-              isRolling={isRolling}
-              rollNumber={rollDice}
-              changeSelection={updateSelection}
-              currentSelection={playerSelection}
-            />
-          )}
-        </div>
-        <div className="col-md-6">
-          {connected && <MessageForm onSend={sendMessage} />}
-        </div>
-      </div>
-    </div>
+    </main>
   );
 };
 

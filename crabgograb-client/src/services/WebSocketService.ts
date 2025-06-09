@@ -5,7 +5,8 @@ export const createWebSocketService = (
   onMessageReceived: (message: string) => void,
   onConnectionChange: (connected: boolean) => void,
   onRollOutcome: (outcome: string) => void,
-  onRollStatus: (isRolling: boolean) => void
+  onRollStatus: (isRolling: boolean) => void,
+  onPlayerListUpdate: (playerList: string[]) => void
 ) => {
   // Create a STOMP client
 
@@ -20,8 +21,18 @@ export const createWebSocketService = (
       // General lobby messages
       client.subscribe('/game/lobby', (greeting) => {
         const message = JSON.parse(greeting.body);
+
         onMessageReceived(message.content);
       });
+
+      if (initialName) {
+        // Notify the server of the initial name
+        console.log('Joining with name:', initialName);
+        client.publish({
+          destination: '/app/greet',
+          body: JSON.stringify({ name: initialName }),
+        });
+      }
 
       // Roll-specific subscriptions
       client.subscribe('/game/roll/status', (message) => {
@@ -29,9 +40,16 @@ export const createWebSocketService = (
         onRollStatus(status.content === 'ROLL_IN_PROGRESS');
       });
 
+      // Roll results
       client.subscribe('/game/roll/outcome', (outcome) => {
         const message = JSON.parse(outcome.body);
         onRollOutcome(message.content);
+      });
+
+      client.subscribe('/game/playerlist', (playerList) => {
+        const players = JSON.parse(playerList.body);
+        console.log('Updated player list:', players);
+        onPlayerListUpdate(players);
       });
     },
     onWebSocketError: (error) => {
@@ -46,12 +64,28 @@ export const createWebSocketService = (
     },
   });
 
+  // Create the handler function outside
+  const handleBeforeUnload = () => {
+    if (client.connected) {
+      client.publish({
+        destination: '/app/leave',
+        body: JSON.stringify({ name: initialName }),
+      });
+    }
+  };
+
   return {
     connect: (name: string) => {
       initialName = name;
       client.activate();
+
+      // Add beforeunload event listener using the reference
+      window.addEventListener('beforeunload', handleBeforeUnload);
     },
     disconnect: () => {
+      // Remove the event listener using the same reference
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+
       client.deactivate();
       onConnectionChange(false);
     },
@@ -63,6 +97,13 @@ export const createWebSocketService = (
           name: initialName,
           content: content,
         }),
+      });
+    },
+    announceDisconnect: () => {
+      console.log('Announcing disconnect');
+      client.publish({
+        destination: '/app/leave',
+        body: JSON.stringify({ name: initialName }),
       });
     },
     broadcastSelection: (content: string) => {
