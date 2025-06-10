@@ -6,6 +6,7 @@ import com.nathanl25.crabgograb.message.Message;
 import com.nathanl25.crabgograb.message.MessageType;
 import jakarta.annotation.PreDestroy;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -21,6 +22,7 @@ public class LobbyService {
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     private final ReentrantLock countdownLock = new ReentrantLock();
     private ScheduledFuture<?> currentCountdown;
+    private ArrayList<String> players = new ArrayList<>();
 
     public LobbyService(SimpMessagingTemplate msgTemplate) {
         this.msgTemplate = msgTemplate;
@@ -73,6 +75,21 @@ public class LobbyService {
             }, 0, 1, TimeUnit.SECONDS);
         } finally {
             countdownLock.unlock();
+        }
+    }
+
+    public void addPlayer(String playerName) {
+        // if (!players.contains(playerName)) {
+        players.add(playerName);
+        msgTemplate.convertAndSend("/game/playerlist",
+                players);
+        // }
+    }
+
+    public void removePlayer(String playerName) {
+        if (players.remove(playerName)) {
+            msgTemplate.convertAndSend("/game/playerlist",
+                    players);
         }
     }
 

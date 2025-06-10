@@ -23,6 +23,7 @@ public class LobbyController {
     public Message greeting(Player user) {
         String announcement = user.getName() + " has joined";
         System.out.println("Greeted");
+        lobbyService.addPlayer(user.getName());
         return new Message(announcement, MessageType.ANNOUNCEMENT);
     }
 
@@ -31,6 +32,7 @@ public class LobbyController {
     public Message leaving(Player user) {
         String announcement = user.getName() + " has disconnected";
         System.out.println("Greeted");
+        lobbyService.removePlayer(user.getName());
         return new Message(announcement, MessageType.ANNOUNCEMENT);
     }
 
