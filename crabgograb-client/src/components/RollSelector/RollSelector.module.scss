@@ -1,0 +1,78 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 95%;
+  margin: 1rem;
+  gap: 1rem;
+}
+
+.selection_group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 0.5rem;
+  width: min(100%, 80vh);
+  aspect-ratio: 3/2;
+  // padding: 1rem;
+  // margin: 1rem;
+}
+
+.number_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1;
+  border: 2px solid #333;
+  border-radius: 8px;
+  font-size: calc(1rem + 2vw);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(.disabled) {
+    background-color: #f0f0f0;
+  }
+
+  &.selected {
+    color: white;
+
+    // Remove the data-value selectors and use nth-child instead
+    &:nth-child(1) {
+      background-color: #e74c3c;
+      border-color: #c0392b;
+    }
+
+    &:nth-child(2) {
+      background-color: #f1c40f;
+      border-color: #f39c12;
+      color: #333;
+    }
+
+    &:nth-child(3) {
+      background-color: #2ecc71;
+      border-color: #27ae60;
+    }
+
+    &:nth-child(4) {
+      background-color: #9b59b6;
+      border-color: #8e44ad;
+    }
+
+    &:nth-child(5) {
+      background-color: #3498db;
+      border-color: #2980b9;
+    }
+
+    &:nth-child(6) {
+      background-color: #e67e22;
+      border-color: #d35400;
+    }
+  }
+
+  &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

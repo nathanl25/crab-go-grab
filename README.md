@@ -1,4 +1,4 @@
-# Project: Postcode Api
+# Project: Crab Go Grab
 
 ## Trello Board
 
@@ -45,10 +45,31 @@
 
 ## Change logs
 
-### 2/03/2025 - Started Project
+### 2025-06-09
 
-- Created README, mock ups for the UI, and kanban board
+- Implemented consistent UI styling
+- Added responsive button styling
+- Improved chat message display
+
+### 2025-05-22
+
+- Initial implementation of game functionality
+- Added countdown system for dice rolls
+- Implemented roll locking mechanism
+- Added player selection broadcast
+- Added real-time roll status updates
+
+### 2025-05-02
+
+- Created initial project files
+- Added player screen mockups
+- Added titles for mockups
+- Set up basic project structure
 
 ## What did you struggle with?
 
 - Understanding websockets and implementing them
+- Managing state across multiple components
+- Handling real-time updates
+- Maintaining consistent styling across components
+- Implementing synchronous countdown across multiple clients

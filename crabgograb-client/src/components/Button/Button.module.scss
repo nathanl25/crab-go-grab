@@ -1,0 +1,99 @@
+@use '../../scss/partials/mixins';
+
+.add {
+  @include mixins.button(#007bff, #ffffff);
+  &:hover {
+    background-color: #0056b3;
+    border: 2px solid #0056b3;
+  }
+}
+
+.delete {
+  @include mixins.button(#dc3545, #ffffff);
+  &:hover {
+    background-color: #c82333;
+    border: 2px solid #c82333;
+  }
+}
+
+.edit {
+  @include mixins.button(#28a745, #ffffff);
+  &:hover {
+    background-color: #218838;
+    border: 2px solid #218838;
+  }
+}
+
+.default {
+  @include mixins.button(#6c757d, #ffffff);
+  &:hover {
+    background-color: #5a6268;
+    border: 2px solid #5a6268;
+  }
+}
+
+.close {
+  @include mixins.button(#007bff, #ffffff);
+  &:hover {
+    background-color: #0056b3;
+    border: 2px solid #0056b3;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.medium {
+  font-size: 1rem;
+  font-weight: bold;
+  min-width: 42px;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.large {
+  font-size: 1.2rem;
+  min-width: 54px;
+  padding: 12px 24px;
+  border-radius: 8px;
+}
+
+.extra_large {
+  font-size: 1.5rem;
+  min-width: 65px;
+  padding: 16px 32px;
+  border-radius: 8px;
+}
+
+.employee {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #007bff;
+  background-color: transparent;
+  border-radius: 8px;
+  border: none;
+  min-width: 0;
+  padding: 8px 16px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #f0f0f0;
+  }
+
+  &:first-child {
+    border-right: 1px solid #333;
+  }
+}
+
+.disabled {
+  @include mixins.button(#6c757d, #ffffff);
+  cursor: not-allowed;
+  opacity: 0.6;
+
+  &:hover {
+    background-color: #6c757d;
+    border: 2px solid #6c757d;
+  }
+}
