@@ -5,6 +5,7 @@ import { type JoinFormData, joinSchema } from '../../schemas/join-schema';
 import classes from './Form.module.scss';
 import { useState } from 'react';
 import Button from '../Button/Button';
+import { useWebSocketContext } from '../../context/WebSocketContext';
 
 interface ConnectionFormProps {
   connected: boolean;
@@ -12,11 +13,8 @@ interface ConnectionFormProps {
   onDisconnect: () => void;
 }
 
-const JoinForm: React.FC<ConnectionFormProps> = ({
-  connected,
-  onConnect,
-  onDisconnect,
-}) => {
+const JoinForm: React.FC = () => {
+  const { connected, connect, disconnect } = useWebSocketContext();
   const [errorMessage, setErrorMessage] = useState('');
   const {
     handleSubmit,
@@ -31,9 +29,9 @@ const JoinForm: React.FC<ConnectionFormProps> = ({
     setErrorMessage('');
     // console.log(data);
     if (connected) {
-      onDisconnect();
+      disconnect();
     } else {
-      onConnect(data.name);
+      connect(data.name);
     }
   };
 

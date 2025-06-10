@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Modal.module.scss';
+import { useWebSocketContext } from '../../context/WebSocketContext';
 
 interface ModalProps {
   isOpen: boolean;
@@ -8,20 +9,16 @@ interface ModalProps {
   type?: 'success' | 'error';
 }
 
-export const Modal: React.FC<ModalProps> = ({
-  isOpen,
-  onClose,
-  message,
-  type = 'error',
-}) => {
-  if (!isOpen) return null;
-
+export const Modal: React.FC = () => {
+  const { modalOpen, closeModal, modalMessage } = useWebSocketContext();
+  if (!modalOpen) return null;
+  const type = modalMessage.includes('correctly') ? 'success' : 'error';
   return (
     <div className={styles.modalOverlay}>
       <div className={`${styles.modal} ${styles[type]}`}>
         <div className={styles.modalContent}>
-          <p>{message}</p>
-          <button onClick={onClose}>Close</button>
+          <p>{modalMessage}</p>
+          <button onClick={closeModal}>Close</button>
         </div>
       </div>
     </div>

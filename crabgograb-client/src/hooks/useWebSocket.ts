@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
-import {
-  createWebSocketService,
-  type WebSocketService,
-} from '../services/WebSocketService';
-import { set } from 'zod/v4';
-import { pl } from 'zod/v4/locales';
+import type { WebSocketService } from '../services/WebSocketService';
+import { createWebSocketService } from '../services/WebSocketService';
 
 interface UseWebSocketReturn {
   connected: boolean;

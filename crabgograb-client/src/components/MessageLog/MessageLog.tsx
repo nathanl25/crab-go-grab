@@ -1,15 +1,16 @@
 import React from 'react';
+import { useWebSocketContext } from '../../context/WebSocketContext';
 import classes from './MessageLog.module.scss';
 
-interface MessageLogProps {
-  messages: string[];
-}
+const MessageLog: React.FC = () => {
+  const { messages } = useWebSocketContext();
 
-const MessageLog: React.FC<MessageLogProps> = ({ messages }) => {
   return (
     <div className={classes.messageLog}>
       {messages.map((message, index) => (
-        <div key={index}>{message}</div>
+        <div key={index} className={classes.message}>
+          {message}
+        </div>
       ))}
     </div>
   );

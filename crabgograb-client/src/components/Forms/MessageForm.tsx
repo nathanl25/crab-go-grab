@@ -10,12 +10,14 @@ import {
 } from '../../schemas/chat-schema';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { useWebSocketContext } from '../../context/WebSocketContext';
 
-interface ConnectionFormProps {
-  onSend: (name: string) => void;
-}
+// interface ConnectionFormProps {
+//   onSend: (name: string) => void;
+// }
 
-const MessageForm: React.FC<ConnectionFormProps> = ({ onSend }) => {
+const MessageForm: React.FC = () => {
+  const { sendMessage } = useWebSocketContext();
   const [errorMessage, setErrorMessage] = useState('');
   const {
     handleSubmit,
@@ -27,7 +29,7 @@ const MessageForm: React.FC<ConnectionFormProps> = ({ onSend }) => {
 
   const submitWrapper = (data: ChatMessageFormData) => {
     setErrorMessage('');
-    onSend(data.message);
+    sendMessage(data.message);
     console.log(data);
   };
 

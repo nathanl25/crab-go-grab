@@ -1,31 +1,28 @@
-import React, { createContext, useContext, type ReactNode } from 'react';
+import React, { createContext, useContext } from 'react';
+import { useWebSocket } from '../hooks/useWebSocket';
 
-// Currently not in use, prop drilling is used instead
+type WebSocketContextType = ReturnType<typeof useWebSocket>;
 
-interface WebSocketContextType {
-  connected: boolean;
-  messages: string[];
-}
+const WebSocketContext = createContext<WebSocketContextType | null>(null);
 
-const WebSocketContext = createContext<WebSocketContextType>({
-  connected: false,
-  messages: [],
-});
-
-interface WebSocketProviderProps {
-  children: ReactNode;
-  value: WebSocketContextType;
-}
-
-export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({
+export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
-  value,
 }) => {
+  const webSocketState = useWebSocket();
+
   return (
-    <WebSocketContext.Provider value={value}>
+    <WebSocketContext.Provider value={webSocketState}>
       {children}
     </WebSocketContext.Provider>
   );
 };
 
-export const useWebSocketContext = () => useContext(WebSocketContext);
+export const useWebSocketContext = () => {
+  const context = useContext(WebSocketContext);
+  if (!context) {
+    throw new Error(
+      'useWebSocketContext must be used within WebSocketProvider'
+    );
+  }
+  return context;
+};
