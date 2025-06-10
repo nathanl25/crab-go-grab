@@ -9,8 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatMessage extends Message {
+public class ChatMessage {
 
     private String name;
+    private String content;
+    private MessageType messageType;
 
 }

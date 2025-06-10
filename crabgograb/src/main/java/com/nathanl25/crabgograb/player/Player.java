@@ -12,5 +12,5 @@ import lombok.Setter;
 public class Player {
 
     private String name;
-    private int selection;
+    // private int selection;
 }

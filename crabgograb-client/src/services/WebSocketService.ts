@@ -1,5 +1,5 @@
 import { createClient } from './CoreService';
-import { createMessageHandlers } from './clientPublishers';
+import { createMessageHandlers } from './ClientPublishers';
 import { setupSubscriptions } from './ClientSubscribers';
 
 export const createWebSocketService = (

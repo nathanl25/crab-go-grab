@@ -93,6 +93,10 @@ public class LobbyService {
         }
     }
 
+    public ArrayList<String> getPlayers() {
+        return players;
+    }
+
     private void stopCountdown() {
         countdownLock.lock();
         try {

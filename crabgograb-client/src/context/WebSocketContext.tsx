@@ -3,7 +3,9 @@ import { useWebSocket } from '../hooks/useWebSocket';
 
 type WebSocketContextType = ReturnType<typeof useWebSocket>;
 
-const WebSocketContext = createContext<WebSocketContextType | null>(null);
+export const WebSocketContext = createContext<WebSocketContextType | null>(
+  null
+);
 
 export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
