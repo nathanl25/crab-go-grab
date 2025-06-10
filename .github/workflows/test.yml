@@ -8,6 +8,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     steps:
       - uses: actions/checkout@v3
 
@@ -20,4 +30,9 @@ jobs:
 
       - name: Build and Test with Maven
         working-directory: ./crabgograb
-        run: mvn clean test
+        env:
+          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/test
+          SPRING_DATASOURCE_USERNAME: root
+          SPRING_DATASOURCE_PASSWORD: root
+        run: |
+          mvn clean test -Dspring.profiles.active=test
