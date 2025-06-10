@@ -4,17 +4,18 @@ import { useNavigate } from 'react-router';
 import { type JoinFormData, joinSchema } from '../../schemas/join-schema';
 import classes from './Form.module.scss';
 import { useState } from 'react';
-import Button from '../Button/Button';
 import {
   chatMessageSchema,
   type ChatMessageFormData,
 } from '../../schemas/chat-schema';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 interface ConnectionFormProps {
   onSend: (name: string) => void;
 }
 
-const JoinForm: React.FC<ConnectionFormProps> = ({ onSend }) => {
+const MessageForm: React.FC<ConnectionFormProps> = ({ onSend }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const {
     handleSubmit,
@@ -32,14 +33,8 @@ const JoinForm: React.FC<ConnectionFormProps> = ({ onSend }) => {
 
   return (
     <>
-      <form
-        className={classes.container}
-        onSubmit={handleSubmit(submitWrapper)}
-      >
+      <form onSubmit={handleSubmit(submitWrapper)}>
         <div className={classes.field}>
-          <div className={classes.error_row}>
-            {errors?.message && <p>{errors?.message.message}</p>}
-          </div>
           <div className={classes.input_row}>
             <input
               className={classes.input}
@@ -48,10 +43,9 @@ const JoinForm: React.FC<ConnectionFormProps> = ({ onSend }) => {
               {...register('message')}
               placeholder="Write your message here"
             />
-            <Button>Send</Button>
-          </div>
-          <div className={classes.submit}>
-            <p className={classes.error_row}>{errorMessage}</p>
+            <button type="submit" className={classes.sendButton}>
+              <FontAwesomeIcon icon={faPlay} />
+            </button>
           </div>
         </div>
       </form>
@@ -59,4 +53,4 @@ const JoinForm: React.FC<ConnectionFormProps> = ({ onSend }) => {
   );
 };
 
-export default JoinForm;
+export default MessageForm;

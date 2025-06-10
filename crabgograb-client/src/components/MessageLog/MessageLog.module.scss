@@ -3,8 +3,8 @@
   border-radius: 8px;
   background-color: #fff;
   height: 400px;
-  margin-bottom: 20px;
-  padding: 10px;
+  margin-top: 20px;
+  padding: 5%;
   transition: all 0.2s ease;
   box-sizing: border-box;
   width: 100%;
@@ -36,4 +36,13 @@
   &:hover {
     background-color: #e3e3e3;
   }
+}
+
+.messageLog {
+  flex: 1; // Take up remaining space
+  overflow-y: auto; // Enable scrolling
+  min-height: 0; // Required for flex child to scroll
+  // padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
 }
