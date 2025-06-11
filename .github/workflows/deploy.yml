@@ -36,15 +36,18 @@ jobs:
           npm run build
 
       - name: Setup SSH
-        shell: bash
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.AWS_SSH_KEY }}" | tr -d '\r' > ~/.ssh/key.pem
+          echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/key.pem
           chmod 600 ~/.ssh/key.pem
           ssh-keyscan -H "${{ secrets.AWS_HOST }}" >> ~/.ssh/known_hosts
 
       - name: Deploy
+        env:
+          AWS_HOST: ${{ secrets.AWS_HOST }}
+          AWS_USER: ${{ secrets.AWS_USERNAME }}
         run: |
-          scp -i ~/.ssh/key.pem -r crabgograb/target/*.jar ${{ secrets.AWS_USERNAME }}@${{ secrets.AWS_HOST }}:~/app/backend/
-          scp -i ~/.ssh/key.pem -r crabgograb-client/dist/* ${{ secrets.AWS_USERNAME }}@${{ secrets.AWS_HOST }}:~/app/frontend/
-          ssh -i ~/.ssh/key.pem ${{ secrets.AWS_USERNAME }}@${{ secrets.AWS_HOST }} 'bash ~/app/deploy.sh'
+
+          scp -i ~/.ssh/key.pem -r crabgograb/target/*.jar ${AWS_USER}@${AWS_HOST}:~/app/backend/
+          scp -i ~/.ssh/key.pem -r crabgograb-client/dist/* ${AWS_USER}@${AWS_HOST}:~/app/frontend/
+          ssh -i ~/.ssh/key.pem ${AWS_USER}@${AWS_HOST} 'bash ~/app/deploy.sh'
