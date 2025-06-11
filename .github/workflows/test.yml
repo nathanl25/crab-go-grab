@@ -1,8 +1,8 @@
-name: Java CI Tests
+name: Run Tests
 
 on:
   pull_request:
-    branches: ['develop', 'main']
+    branches: [ main, develop ]
 
 jobs:
   test:
@@ -28,7 +28,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build and Test with Maven
+      - name: Run Tests
         working-directory: ./crabgograb
         env:
           SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/test
