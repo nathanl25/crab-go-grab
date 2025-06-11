@@ -2,12 +2,12 @@ name: Deploy to EC2
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v3
 
@@ -29,7 +29,7 @@ jobs:
           cache: 'npm'
 
       - name: Build Frontend
-        working-directory: ./client
+        working-directory: ./crabgograb-client
         run: |
           npm ci
           npm run build
@@ -44,5 +44,5 @@ jobs:
       - name: Deploy
         run: |
           scp -i ~/.ssh/key.pem -r crabgograb/target/*.jar ${{ secrets.AWS_USERNAME }}@${{ secrets.AWS_HOST }}:~/app/backend/
-          scp -i ~/.ssh/key.pem -r client/dist/* ${{ secrets.AWS_USERNAME }}@${{ secrets.AWS_HOST }}:~/app/frontend/
+          scp -i ~/.ssh/key.pem -r crabgograb-client/dist/* ${{ secrets.AWS_USERNAME }}@${{ secrets.AWS_HOST }}:~/app/frontend/
           ssh -i ~/.ssh/key.pem ${{ secrets.AWS_USERNAME }}@${{ secrets.AWS_HOST }} 'bash ~/app/deploy.sh'
