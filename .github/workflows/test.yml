@@ -28,7 +28,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Run Tests
+      - name: Run Backend Tests
         working-directory: ./crabgograb
         env:
           SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/test
@@ -36,3 +36,22 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: root
         run: |
           mvn clean test -Dspring.profiles.active=test
+
+      - name: Test SSH Connection
+        env:
+          SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
+          SSH_HOST: ${{ secrets.AWS_HOST }}
+          SSH_USER: ${{ secrets.AWS_USERNAME }}
+        run: |
+          if [ -z "$SSH_KEY" ] || [ -z "$SSH_HOST" ] || [ -z "$SSH_USER" ]; then
+            echo "Error: One or more required SSH variables are not set"
+            exit 1
+          fi
+          
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/key.pem
+          chmod 600 ~/.ssh/key.pem
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+          
+          # Test SSH connection
+          ssh -i ~/.ssh/key.pem -o StrictHostKeyChecking=accept-new $SSH_USER@$SSH_HOST 'echo "SSH connection test successful"'
