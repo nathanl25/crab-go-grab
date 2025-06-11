@@ -27,6 +27,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: './crabgograb-client/package-lock.json'
 
       - name: Build Frontend
         working-directory: ./crabgograb-client
