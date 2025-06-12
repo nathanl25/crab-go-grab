@@ -14,6 +14,7 @@ export const createWebSocketService = (
   const client = createClient(onConnectionChange);
 
   client.onConnect = () => {
+    console.log('WebSocket connected to EBS');
     onConnectionChange(true);
     setupSubscriptions(client, {
       onMessageReceived,

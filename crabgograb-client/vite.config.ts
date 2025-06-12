@@ -11,11 +11,13 @@ export default defineConfig({
     strictPort: true,
     proxy: {
       '/api': {
-        target: 'http://your-ec2-public-dns:8080', // Replace with your EC2 public DNS or IP
+        target:
+          'http://crab-go-grab-environment.eba-mxet7rx6.ap-southeast-2.elasticbeanstalk.com/', // Replace with your EC2 public DNS or IP
         changeOrigin: true,
       },
       '/ws': {
-        target: 'ws://your-ec2-public-dns:8080', // Replace with your EC2 public DNS or IP
+        target:
+          'ws://crab-go-grab-environment.eba-mxet7rx6.ap-southeast-2.elasticbeanstalk.com/', // Replace with your EC2 public DNS or IP
         ws: true,
       },
     },

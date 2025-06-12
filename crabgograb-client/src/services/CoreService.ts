@@ -4,7 +4,8 @@ export type MessageCallback = (message: any) => void;
 
 export const createClient = (onConnectionChange: (status: boolean) => void) => {
   return new Client({
-    brokerURL: 'ws://localhost:8080/crabgograb/websocket',
+    brokerURL:
+      'ws://crab-go-grab-environment.eba-mxet7rx6.ap-southeast-2.elasticbeanstalk.com/crabgograb/websocket',
     onConnect: () => onConnectionChange(true),
     onDisconnect: () => onConnectionChange(false),
     onWebSocketError: (error) => console.error('WebSocket error:', error),
